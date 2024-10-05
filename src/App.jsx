@@ -1,8 +1,9 @@
 import './App.css'
-import CreateAccountForm from './pages/CreateAccount'
+import PhotoUpload from './pages/PhotoUpload'
+import CreateAccountForm from "./pages/CreateAccount.jsx";
 import SignInForm from "./pages/SignIn.jsx";
-import Preferences from './pages/Preferences';
 import {Route, Routes} from "react-router-dom";
+import Status from './pages/Status.jsx';
 
 function App() {
     return (
@@ -11,6 +12,8 @@ function App() {
                 <Route path="/" element={<SignInForm />} />
                 <Route path="/create" element={<CreateAccountForm />} />
                 <Route path="/preferences" element={<Preferences />} />
+                <Route path="/status" element={<Status />} />
+                <Route path="/ticket" element={<PhotoUpload />} />
             </Routes>
         </>
 
