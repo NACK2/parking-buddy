@@ -6,7 +6,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import EventIcon from '@mui/icons-material/Event';
 
-const ParkingSchedule = () => {
+const Status = () => {
   const [selectedCells, setSelectedCells] = useState(new Set());  // Use Set to track selected cells
   const [isSelecting, setIsSelecting] = useState(false);          // State to track dragging
   const startCellRef = useRef(null);                              // Ref to store the first cell of the selection
@@ -164,4 +164,4 @@ const ParkingSchedule = () => {
   );
 };
 
-export default ParkingSchedule;
+export default Status;
