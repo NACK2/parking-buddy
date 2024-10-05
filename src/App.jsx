@@ -6,7 +6,7 @@ import PhotoUpload from './pages/PhotoUpload'
 import CreateAccountForm from "./pages/CreateAccount.jsx";
 import SignInForm from "./pages/SignIn.jsx";
 import {Route, Routes} from "react-router-dom";
-import Status from './pages/Status.jsx';
+import ParkingSchedule from './pages/Status.jsx'
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<SignInForm />} />
                 <Route path="/create" element={<CreateAccountForm />} />
-                <Route path="/status" element={<Status />} />
+                <Route path="/status" element={<ParkingSchedule />} />
                 <Route path="/ticket" element={<PhotoUpload />} />
             </Routes>
         </>
