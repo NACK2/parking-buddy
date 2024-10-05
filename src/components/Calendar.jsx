@@ -1,7 +1,17 @@
-const Calendar = () => {
+import { useState } from "react";
+
+const Calendar = ({isPreferencesPage}) => {
     // Timetable array
     const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     const hours = Array.from({ length: 24 }, (_, i) => `${i}:00 - ${i + 1}:00`);
+
+    const [selectedTime, setSelectedTime] = useState()
+
+    const handleTimeSlotClick = (hour, day) => {
+        const timeSlotInfo = `${hour}, ${day}`;
+        setSelectedTime(timeSlotInfo);
+        console.log(timeSlotInfo);
+      };
 
     return (
         <div style={{ flex: "3" }}>
@@ -17,14 +27,23 @@ const Calendar = () => {
               </thead>
               <tbody>
                 {hours.map((hour, index) => (
-                  <tr key={hour}>
+                <tr key={hour}>
                     <td>{hour}</td>
-                    {daysOfWeek.map((day) => (
-                      <td key={day + index}></td>
-                    ))}
-                  </tr>
+                    {daysOfWeek.map((day) => 
+                        isPreferencesPage ? (
+                        <td
+                            key={day + index}
+                            onClick={() => handleTimeSlotClick(hour, day)} 
+                            style={{ cursor: "pointer", textAlign: "center" }}
+                        >
+                        </td>
+                        ) : (
+                            <td key={day + index}></td>
+                        )
+                    )}
+                </tr>
                 ))}
-              </tbody>
+            </tbody>
             </table>
           </div>
         </div>
