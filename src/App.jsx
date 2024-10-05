@@ -5,6 +5,7 @@ import './App.css'
 import CreateAccountForm from "./CreateAccount.jsx";
 import SignInForm from "./SignIn.jsx";
 import {Route, Routes} from "react-router-dom";
+import Status from './status.jsx';
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<SignInForm />} />
                 <Route path="/create" element={<CreateAccountForm />} />
+                <Route path="/status" element={<Status />} />
             </Routes>
         </>
 
