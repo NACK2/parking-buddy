@@ -5,13 +5,15 @@ const Calendar = ({isPreferencesPage}) => {
     const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     const hours = Array.from({ length: 24 }, (_, i) => `${i}:00 - ${i + 1}:00`);
 
-    const [selectedTime, setSelectedTime] = useState()
+    const [selectedTimes, setSelectedTimes] = useState([])
 
     const handleTimeSlotClick = (hour, day) => {
-        const timeSlotInfo = `${hour}, ${day}`;
-        setSelectedTime(timeSlotInfo);
-        console.log(timeSlotInfo);
-      };
+        const newTimeSlot = {hour, day};
+        setSelectedTimes(prevState => [...prevState, newTimeSlot]);
+    }
+
+    // console.log(selectedTimes.some(timeslot => timeslot.hour === '6:00 - 7:00' && timeslot.day === 'Friday'))
+    console.log(selectedTimes)
 
     return (
         <div style={{ flex: "3" }}>
@@ -34,7 +36,11 @@ const Calendar = ({isPreferencesPage}) => {
                         <td
                             key={day + index}
                             onClick={() => handleTimeSlotClick(hour, day)} 
-                            style={{ cursor: "pointer", textAlign: "center" }}
+                            style={{ 
+                                cursor: "pointer", 
+                                textAlign: "center",
+                                backgroundColor: selectedTimes.some(timeslot => timeslot.hour === hour && timeslot.day === day) ? "green" : "white"
+                            }}
                         >
                         </td>
                         ) : (
