@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 
 const Preferences = () => {
@@ -21,16 +22,15 @@ const Preferences = () => {
         console.log(timeSlotInfo); // Log or handle the time slot information as needed
       };
 
-    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    const hours = Array.from({ length: 24 }, (_, i) => `${i}:00 - ${i + 1}:00`);
-
     return (
         <>
             {Object.keys(parkades).map((parkade, i) => (
                 <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
             ))}
 
-            <div style={{ flex: "3" }}>
+            <Calendar/>
+
+            {/* <div style={{ flex: "3" }}>
                 <div style={{ maxHeight: "455px", overflowY: "scroll", border: "1px solid #ccc" }}>
                     <table border="1" cellPadding="5" style={{ borderCollapse: "collapse", width: "100%" }}>
                     <thead>
@@ -58,7 +58,7 @@ const Preferences = () => {
                     </tbody>
                     </table>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

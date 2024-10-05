@@ -4,6 +4,7 @@ import CreateAccountForm from "./pages/CreateAccount.jsx";
 import SignInForm from "./pages/SignIn.jsx";
 import {Route, Routes} from "react-router-dom";
 import Status from './pages/Status.jsx';
+import Preferences from './pages/Preferences';
 
 function App() {
     return (
