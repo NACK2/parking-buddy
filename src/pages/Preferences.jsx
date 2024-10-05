@@ -13,15 +13,27 @@ const Preferences = () => {
         }
     )
 
+    const handleChange = (event) => {
+        const parkade = event.target.value
+        setParkades(prevState => (
+            {
+                ...prevState, 
+                [parkade]: !parkades[parkade]
+            }))
+    }
+
+    console.log(parkades)
+
     return (
         <>
             { Object.keys(parkades).map(parkade => (
-                <Box>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
                     <FormControlLabel 
                         key={parkade} 
                         control={<Checkbox />} 
                         label={parkade} 
-                        // onChange={}
+                        value={parkade}
+                        onChange={handleChange}
                     />
                 </Box>
             ))}
