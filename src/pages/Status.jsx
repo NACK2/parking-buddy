@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar";
+import Calendar from "../components/Calendar";
 // Dummy data for parking group
 const parkingGroup = {
   groupName: "Group A",
@@ -13,16 +14,12 @@ const Status = () => {
   // Status state
   const [status, setStatus] = useState(statusOptions[0]);
 
-  // Timetable array
-  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  const hours = Array.from({ length: 24 }, (_, i) => `${i}:00 - ${i + 1}:00`);
-
   return (
     <div >
       
       {/* Navbar */}
       <div className='navbar-container'>
-                <Navbar />
+            <Navbar />
         </div>
 
       {/* Header */}
@@ -41,31 +38,7 @@ const Status = () => {
           <p><strong>Members:</strong> {parkingGroup.members.join(", ")}</p>
         </div>
 
-        {/* Timetable with scrollable hours */}
-        <div style={{ flex: "3" }}>
-          <div style={{ maxHeight: "455px", overflowY: "scroll", border: "1px solid #ccc" }}>
-            <table border="1" cellPadding="5" style={{ borderCollapse: "collapse", width: "100%" }}>
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  {daysOfWeek.map((day) => (
-                    <th key={day}>{day}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {hours.map((hour, index) => (
-                  <tr key={hour}>
-                    <td>{hour}</td>
-                    {daysOfWeek.map((day) => (
-                      <td key={day + index}></td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Calendar/>
       </div>
     </div>
   );
