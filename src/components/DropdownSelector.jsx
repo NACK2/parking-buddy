@@ -1,22 +1,29 @@
 import { Box, FormControl, Select, MenuItem, Typography } from '@mui/material';
 
-const DropdownSelector = ({setParkades, parkade, length}) => {
+const DropdownSelector = ({parkades, setParkades, parkade}) => {
+    const handleChange = (event) => {
+        setParkades(prevParkades => (
+            {...prevParkades, parkade: event.target.value}
+        ))
+    }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <FormControl sx={{width: 60}}>
                 <Select
                     // labelId="demo-simple-select-label"
                     // id="demo-simple-select"
+                    value={parkades[parkade]}
                     // label="Age"
-                    // onChange={handleChange}
+                    onChange={handleChange}
                     sx={{height: 40}}
                 >
-                    {Array.from(length).map((_, i) => (
+                    {Object.keys(parkades).map((_, i) => (
                         <MenuItem key={i} value={i}>{i+1}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
-            <Typography sx={{ marginLeft: 2 }}>{parkade}</Typography>
+            <Typography sx={{ marginLeft: 2 }}> {parkade} </Typography>
         </Box>
     )
 }

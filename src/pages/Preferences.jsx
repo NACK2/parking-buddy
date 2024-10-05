@@ -5,28 +5,18 @@ const Preferences = () => {
     const [parkades, setParkades] = useState(
         {
             "North Parkade": 0,
-            "West Parkade": 0,
-            "Rose Parkade": 0,
-            "Health Parkade": 0,
-            "Fraser Parkade": 0,
-            "Thunderbird Parkade": 0
+            "West Parkade": 1,
+            "Rose Parkade": 2,
+            "Health Parkade": 3,
+            "Fraser Parkade": 4,
+            "Thunderbird Parkade": 5
         }
     )
-
-    // const handleChange = (event) => {
-    //     const parkade = event.target.value
-    //     setParkades(prevState => (
-    //         {
-    //             ...prevState, 
-    //             [parkade]: !parkades[parkade]
-    //         }))
-    // }
-
 
     return (
         <>
             {Object.keys(parkades).map((parkade, i) => (
-                <DropdownSelector key={i} setParkades={setParkades} parkade={parkade} length={Object.keys(parkades).length}/>
+                <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
             ))}
         </>
     )
