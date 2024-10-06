@@ -5,7 +5,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CameraIcon from '@mui/icons-material/Camera';
 import { makeStyles } from '@mui/styles';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const useStyles = makeStyles({
   navLinks: {
@@ -54,7 +56,13 @@ function Navbar() {
               Status <CalendarTodayIcon sx={{ ml: 1 }} />
             </Button>
             <Button component={Link} to="/preferences" color="inherit">
-              Preferences <SettingsIcon sx={{ ml: 1 }} />
+              Preferences <FavoriteIcon sx={{ ml: 1 }} />
+            </Button>
+            <Button component={Link} to="/ticket" color="inherit">
+              Ticket <CameraIcon sx={{ ml: 1 }} />
+            </Button>
+            <Button component={Link} to="/settings" color="inherit">
+              Settings <SettingsIcon sx={{ ml: 1 }} />
             </Button>
           </div>
         </Toolbar>
@@ -83,6 +91,14 @@ function Navbar() {
             <ListItem button component={Link} to="/preferences">
               <SettingsIcon sx={{ mr: 1 }} />
               <ListItemText primary="Preferences" />
+            </ListItem>
+            <ListItem button component={Link} to="/ticket">
+              <SettingsIcon sx={{ mr: 1 }} />
+              <ListItemText primary="ticket" />
+            </ListItem>
+            <ListItem button component={Link} to="/settings">
+              <SettingsIcon sx={{ mr: 1 }} />
+              <ListItemText primary="settings" />
             </ListItem>
           </List>
         </div>
