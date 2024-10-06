@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Grid } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 
@@ -16,11 +17,17 @@ const Preferences = () => {
 
     return (
         <>
-            {Object.keys(parkades).map((parkade, i) => (
-                <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
-            ))}
+            <Grid container spacing={1}>
+                <Grid item xs={3}>
+                    {Object.keys(parkades).map((parkade, i) => (
+                        <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
+                    ))}
+                </Grid>
 
-            <Calendar isPreferencesPage={true}/>
+                <Grid item xs={9}>
+                <   Calendar isPreferencesPage={true}/>
+                </Grid>
+            </Grid>
         </>
     )
 }
