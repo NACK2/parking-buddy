@@ -1,18 +1,38 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Button, TextField, Typography, Container, Box, Link } from '@mui/material';
+import axios from 'axios';
 
 function SignInForm() {
     const [email, setEmail] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
+
+    const nav = useNavigate();
 
     // TODO: currently hardcoded signing in, fix
     const handleSubmit = (e) => {
         e.preventDefault();
+        const userData = {
+            email: email,
+            password: password
+        }
         if (email && password) {
+            axios.get("http://localhost:5050/users", userData)
+                .then(() => {
+                    nav("/status")
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
             alert("Signed in successfully!");
         } else {
             alert("Please fill in all fields.");
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -55,11 +75,18 @@ function SignInForm() {
                         fullWidth
                         name="password"
                         label="Password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <Button onClick={togglePasswordVisibility}>
+                                    {showPassword ? "Hide" : "Show"}
+                                </Button>
+                            ),
+                        }}
                     />
                     <Button
                         type="submit"

@@ -15,7 +15,8 @@ function CreateAccountForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
-            email: email
+            email: email,
+            password: password
         }
         if (email && password) {
             if (password === confirmPassword) {
