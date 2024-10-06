@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Typography, Container, Box, Link } from '@mui/material';
-
+import { EmailContext } from '../EmailContext';
 function SignInForm() {
-    const [email, setEmail] = useState('');
+    const { email, setEmail } = useContext(EmailContext);
     const [password, setPassword] = useState('');
 
     // TODO: currently hardcoded signing in, fix
