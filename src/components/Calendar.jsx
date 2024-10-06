@@ -121,7 +121,12 @@ const Calendar = ({isPreferencesPage}) => {
         setIsSelecting(true);
         startCellRef.current = cellId;
         const newSelectedCells = new Set(selectedCells);  // Copy previous selection
-        newSelectedCells.add(cellId);  // Add the starting cell to the Set
+        
+        if (newSelectedCells.has(cellId)) {
+            newSelectedCells.delete(cellId)
+        } else {
+            newSelectedCells.add(cellId);  // Add the starting cell to the Set    
+        }
         setSelectedCells(newSelectedCells);  // Update the state
     };
 
@@ -138,7 +143,7 @@ const Calendar = ({isPreferencesPage}) => {
 
     return (
         <Grid item xs={12} onMouseUp={handleMouseUp}>
-            <TableContainer component={Paper} sx={{ maxHeight: '500px', overflowY: 'scroll' }}>
+            <TableContainer component={Paper} sx={{ maxHeight: '500px', overflowY: 'scroll'}}>
             <Table stickyHeader>
                 <TableHead>
                 <TableRow>

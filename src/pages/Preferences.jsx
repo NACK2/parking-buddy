@@ -9,9 +9,8 @@ const Preferences = () => {
             "North Parkade": 1,
             "West Parkade": 2,
             "Rose Parkade": 3,
-            "Health Parkade": 4,
-            "Fraser Parkade": 5,
-            "Thunderbird Parkade": 6
+            "Fraser Parkade": 4,
+            "Thunderbird Parkade": 5
         }
     )
 
@@ -25,7 +24,7 @@ const Preferences = () => {
                 </Grid>
 
                 <Grid item xs={9}>
-                <   Calendar isPreferencesPage={true}/>
+                    <Calendar isPreferencesPage={true}/>
                 </Grid>
             </Grid>
         </>
