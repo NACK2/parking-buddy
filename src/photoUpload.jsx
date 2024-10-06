@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createWorker } from 'tesseract.js';
 import { CircularProgress, Box, Button, TextField, Typography, Paper, InputLabel, FormControl, Select, MenuItem, Divider, Link } from '@mui/material';
+var first = 0;
 
 const PhotoUpload = () => {
     const [file, setFile] = useState(null);
@@ -19,18 +20,6 @@ const PhotoUpload = () => {
     
     Plate #: DS881G`
 
-    useEffect(() => {
-        const imageToText = async () => {
-            const worker = await createWorker("eng");
-            const { data } = await worker.recognize(file)
-                .then(setText(data.text));
-            ;
-        }
-        imageToText();
-        console.log(text)
-        parseText(text)
-    }), [file]
-
     function parseText(text) {
         // plate parsing
         var size = text.length;
@@ -45,6 +34,8 @@ const PhotoUpload = () => {
             for (let i = plateIndexBegin; i < plateIndexEnd; ++i) {
                 plateNumber += text[i];
             }
+            const regex = /[A-Z0-9]{1,7}/g;
+            plateNumber = plateNumber.match(regex)
             setPlate(plateNumber);
         }
 
@@ -78,17 +69,17 @@ const PhotoUpload = () => {
             setLocation(loc);
         }
 
-        console.log(location);
-        console.log(time);
-        console.log(plate);
+        console.log(loc);
+        console.log(timeIssued);
+        console.log(plateNumber);
     }
 
     async function imageToText(image) {
         const worker = await createWorker("eng");
-        const { data } = await worker.recognize(image);
+        const { data } = await worker.recognize(image)
         setText(data.text);
-        console.log(text);
-        parseText(text);
+        console.log(data.text);
+        parseText(data.text);
     }
 
     const handleUpload = (e) => {
@@ -97,6 +88,7 @@ const PhotoUpload = () => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
             setFile(selectedFile)
+            imageToText(selectedFile)
         }
     }
 
