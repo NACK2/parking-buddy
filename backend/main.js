@@ -33,6 +33,7 @@ let db;
   }
 })();
 
+// find all users
 app.get('/users', async (req, res) => {
   try {
     const usersCollection = db.collection('Users'); // Ensure the collection name matches exactly
@@ -43,6 +44,7 @@ app.get('/users', async (req, res) => {
   }
 });
 
+// sign up: create a user
 app.post("/users", async (req, res) => {
   console.log('Request body:', req.body); // Log the received body
   try {
@@ -61,7 +63,7 @@ app.post("/users", async (req, res) => {
   }
 });
 
-
+// find parking users
 app.get('/parking', async (req, res) => {
   try {
     const parkingCollection = db.collection('Parking Lots'); // Ensure the collection name matches exactly
@@ -72,6 +74,7 @@ app.get('/parking', async (req, res) => {
   }
 });
 
+// add parking 
 app.post("/parking", async (req, res) => {
   let collection = await db.collection("Parking Lots");
   let newDocument = req.body;
@@ -79,4 +82,36 @@ app.post("/parking", async (req, res) => {
   let result = await collection.insertOne(newDocument);
   res.send(result).status(204);
 });
+
+app.get("/users/signin", async (req, res) => {
+  const email = req.query.email; // Get the email from query parameters
+  const password = req.query.password; // Get the password from query parameters
+  console.log(email);
+  console.log(password)
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required." });
+  }
+
+  try {
+    const usersCollection = db.collection("Users");
+    const user = await usersCollection.findOne({ email });
+
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+
+    const passwordMatch = password == user.password
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+
+    // Successful authentication
+    res.status(200).json({ message: "Sign-in successful", userId: user._id });
+  } catch (error) {
+    console.error("Error during sign-in", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+})
 

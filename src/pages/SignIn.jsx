@@ -1,18 +1,46 @@
 import React, { useState, useContext } from 'react';
-import { Button, TextField, Typography, Container, Box, Link } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { Button, TextField, Typography, Container, Box, Link, Alert } from '@mui/material';
+import axios from 'axios';
 import { EmailContext } from '../EmailContext';
+
 function SignInForm() {
+    const [email, setEmail] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const { email, setEmail } = useContext(EmailContext);
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState("");
+
+    const nav = useNavigate();
 
     // TODO: currently hardcoded signing in, fix
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (email && password) {
-            alert("Signed in successfully!");
+            try {
+                const response = await axios.get(`http://localhost:5050/users/signin`, {
+                    params: {
+                        email: email,
+                        password: password
+                    }
+                });
+                nav("/status");
+                // If the user is found, you can handle the response accordingly
+                setMessage(response.data.message);
+            } catch (error) {
+                if (error.response) {
+                    setMessage(error.response.data.message);
+                } else {
+                    setMessage('An error occurred. Please try again later.');
+                }
+            }
         } else {
             alert("Please fill in all fields.");
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -55,11 +83,18 @@ function SignInForm() {
                         fullWidth
                         name="password"
                         label="Password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <Button onClick={togglePasswordVisibility}>
+                                    {showPassword ? "Hide" : "Show"}
+                                </Button>
+                            ),
+                        }}
                     />
                     <Button
                         type="submit"
@@ -69,8 +104,13 @@ function SignInForm() {
                     >
                         Sign In
                     </Button>
+                    {message && (
+                        <Alert severity="error">
+                            {message}
+                        </Alert>
+                    )}
                 </Box>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
                     Don't have an account? <Link href="create" sx={{ color: '#7DCFA6' }}>Create one</Link>
                 </Typography>
             </Box>
