@@ -9,7 +9,7 @@ let db;
 async function connectDB() {
   try {
     const conn = await client.connect();
-    db = conn.db("sample_training"); // Change "sample_training" to your actual database name
+    db = conn.db(); // Change "sample_training" to your actual database name
     console.log("MongoDB connected successfully");
     return db; // Return the connected database object
   } catch (e) {

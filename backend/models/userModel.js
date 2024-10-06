@@ -1,12 +1,13 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema(
     {
-        ID: {
-            type: String,
+        _iD: {
+            type: ObjectId,
             required: true,
         },
-        Owner: {
+        owner: {
             type: Boolean,
             required: true,
         },
@@ -18,9 +19,6 @@ const UserSchema = mongoose.Schema(
             type: Array,
             required: true,
         }
-    },
-    {
-        timestamps: true,
     }
 );
 
