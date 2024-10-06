@@ -2,23 +2,8 @@ import { Card, CardContent, Typography, Grid, Box, Table, TableBody, TableCell, 
 import { useState, useRef } from "react";
 
 const Calendar = ({isPreferencesPage}) => {
-    // Timetable array
-    // const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    // const hours = Array.from({ length: 24 }, (_, i) => `${i}:00 - ${i + 1}:00`);
-
-    // const [selectedTimes, setSelectedTimes] = useState([])
-
-    // const handleTimeSlotClick = (hour, day) => {
-    //     const newTimeSlot = {hour, day};
-    //     setSelectedTimes(prevState => [...prevState, newTimeSlot]);
-    // }
-
-    // console.log(selectedTimes.some(timeslot => timeslot.hour === '6:00 - 7:00' && timeslot.day === 'Friday'))
-    // console.log(selectedTimes)
-
     const [selectedCells, setSelectedCells] = useState(new Set());  // Use Set to track selected cells
-    console.log(selectedCells)
-
+    const selectedTimesArr = Array.from(selectedCells).sort()
 
     const [isSelecting, setIsSelecting] = useState(false);
     const startCellRef = useRef(null); 
@@ -32,10 +17,49 @@ const Calendar = ({isPreferencesPage}) => {
         '20:00 - 21:00', '21:00 - 22:00', '22:00 - 23:00', '23:00 - 24:00'
     ];
 
+    /*
+    schedule = {
+        monday: ["1-3", "5-7"],
+        tuesday: ["4-7", "10-12"],
+        ...
+    }
+    */
+    
+    const arrToObj = () => {
+        const dayEnum = {
+            0: 'Sunday',
+            1: 'Monday',
+            2: 'Tuesday',
+            3: 'Wednesday',
+            4: 'Thursday',
+            5: 'Friday',
+            6: 'Saturday',
+        }
+
+        const result = selectedTimesArr.reduce((acc, curr) => {
+            const [key, value] = curr.split('-').map(Number); // Split the string and convert to numbers
+            const day = dayEnum[key]
+        
+            // If the key doesn't exist in the accumulator, initialize it with an empty array
+            if (!acc[day]) {
+                acc[day] = [];
+            }
+        
+            // Push the value into the corresponding array for the key
+            acc[day].push(value);
+            
+            return acc; // Return the updated accumulator
+        }, {});
+
+        return result
+    }
+
+    console.log(arrToObj())
+
     // Function to calculate the selected cells during dragging
     const calculateSelectedCells = (endCell) => {
-        const [startRow, startCol] = startCellRef.current.split('-');
-        const [endRow, endCol] = endCell.split('-');
+        const [startCol, startRow] = startCellRef.current.split('-');
+        const [endCol, endRow] = endCell.split('-');
         
         const rowStart = Math.min(startRow, endRow);
         const rowEnd = Math.max(startRow, endRow);
@@ -45,9 +69,9 @@ const Calendar = ({isPreferencesPage}) => {
         const newSelectedCells = new Set(selectedCells);  // Create a copy of selected cells
 
         for (let row = rowStart; row <= rowEnd; row++) {
-        for (let col = colStart; col <= colEnd; col++) {
-            newSelectedCells.add(`${row}-${col}`);  // Add the selected cells to the Set
-        }
+            for (let col = colStart; col <= colEnd; col++) {
+                newSelectedCells.add(`${col}-${row}`);  // Use col-row format
+            }
         }
 
         setSelectedCells(newSelectedCells);  // Update state with newly selected cells
@@ -63,7 +87,7 @@ const Calendar = ({isPreferencesPage}) => {
 
     const handleMouseEnter = (cellId) => {
         if (isSelecting) {
-        calculateSelectedCells(cellId);
+            calculateSelectedCells(cellId);
         }
     };
 
@@ -80,7 +104,7 @@ const Calendar = ({isPreferencesPage}) => {
                 <TableRow>
                     <TableCell sx={{ backgroundColor: '#1976d2', color: 'white', fontWeight: 'bold', border: '1px solid #ccc' }}>Time</TableCell>
                     {days.map((day, colIndex) => (
-                    <TableCell key={day} sx={{ backgroundColor: '#1976d2', color: 'white', fontWeight: 'bold', border: '1px solid #ccc' }}>{day}</TableCell>
+                        <TableCell key={day} sx={{ backgroundColor: '#1976d2', color: 'white', fontWeight: 'bold', border: '1px solid #ccc' }}>{day}</TableCell>
                     ))}
                 </TableRow>
                 </TableHead>
@@ -89,7 +113,7 @@ const Calendar = ({isPreferencesPage}) => {
                     <TableRow key={time} sx={{ backgroundColor: rowIndex % 2 === 0 ? '#f1f8ff' : 'white' }}>
                     <TableCell sx={{ border: '1px solid #ccc', fontWeight: 'bold' }}>{time}</TableCell>
                     {days.map((day, colIndex) => {
-                        const cellId = `${rowIndex}-${colIndex}`;
+                        const cellId = `${colIndex}-${rowIndex}`;
                         const isSelected = selectedCells.has(cellId);  // Check if the cell is in the selected set
                         return (
                         <TableCell
@@ -97,8 +121,8 @@ const Calendar = ({isPreferencesPage}) => {
                             onMouseDown={() => handleMouseDown(cellId)}
                             onMouseEnter={() => handleMouseEnter(cellId)}
                             sx={{
-                            border: '1px solid #ccc',
-                            cursor: 'pointer',
+                            // border: '1px solid #ccc',
+                            // cursor: 'pointer',
                             backgroundColor: isSelected ? '#81c784' : 'inherit',
                             '&:hover': {
                                 backgroundColor: '#e0e0e0',

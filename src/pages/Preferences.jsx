@@ -5,12 +5,12 @@ import DropdownSelector from '../components/dropdownSelector';
 const Preferences = () => {
     const [parkades, setParkades] = useState(
         {
-            "North Parkade": 0,
-            "West Parkade": 1,
-            "Rose Parkade": 2,
-            "Health Parkade": 3,
-            "Fraser Parkade": 4,
-            "Thunderbird Parkade": 5
+            "North Parkade": 1,
+            "West Parkade": 2,
+            "Rose Parkade": 3,
+            "Health Parkade": 4,
+            "Fraser Parkade": 5,
+            "Thunderbird Parkade": 6
         }
     )
 
