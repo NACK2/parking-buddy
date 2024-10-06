@@ -7,10 +7,14 @@ import CreateAccountForm from "./pages/CreateAccount.jsx";
 import SignInForm from "./pages/SignIn.jsx";
 import {Route, Routes} from "react-router-dom";
 import ParkingSchedule from './pages/Status.jsx'
+import Navbar from './components/Navbar.jsx'
 
 function App() {
     return (
         <>
+            <div>
+                <Navbar />
+            </div>
             <Routes>
                 <Route path="/" element={<SignInForm />} />
                 <Route path="/create" element={<CreateAccountForm />} />

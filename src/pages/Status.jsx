@@ -59,47 +59,8 @@ const ParkingSchedule = () => {
     },
   ];
 
-  // Function to calculate the selected cells during dragging
-  const calculateSelectedCells = (endCell) => {
-    const [startRow, startCol] = startCellRef.current.split('-');
-    const [endRow, endCol] = endCell.split('-');
-    
-    const rowStart = Math.min(startRow, endRow);
-    const rowEnd = Math.max(startRow, endRow);
-    const colStart = Math.min(startCol, endCol);
-    const colEnd = Math.max(startCol, endCol);
-
-    const newSelectedCells = new Set(selectedCells);  // Create a copy of selected cells
-
-    for (let row = rowStart; row <= rowEnd; row++) {
-      for (let col = colStart; col <= colEnd; col++) {
-        newSelectedCells.add(`${row}-${col}`);  // Add the selected cells to the Set
-      }
-    }
-
-    setSelectedCells(newSelectedCells);  // Update state with newly selected cells
-  };
-
-  const handleMouseDown = (cellId) => {
-    setIsSelecting(true);
-    startCellRef.current = cellId;
-    const newSelectedCells = new Set(selectedCells);  // Copy previous selection
-    newSelectedCells.add(cellId);  // Add the starting cell to the Set
-    setSelectedCells(newSelectedCells);  // Update the state
-  };
-
-  const handleMouseEnter = (cellId) => {
-    if (isSelecting) {
-      calculateSelectedCells(cellId);
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsSelecting(false); // End the selection process
-  };
-
   return (
-    <Grid container spacing={2} justifyContent="center" onMouseUp={handleMouseUp}>
+    <Grid container spacing={2} justifyContent="center">
       {/* Adapted Cards Section */}
       {cardData.map((data, index) => (
         <Grid item xs={12} md={4} key={index}>
@@ -126,7 +87,7 @@ const ParkingSchedule = () => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ backgroundColor: '#1976d2', color: 'white', fontWeight: 'bold', border: '1px solid #ccc' }}>Time</TableCell>
-                {days.map((day, colIndex) => (
+                {days.map((day) => (
                   <TableCell key={day} sx={{ backgroundColor: '#1976d2', color: 'white', fontWeight: 'bold', border: '1px solid #ccc' }}>{day}</TableCell>
                 ))}
               </TableRow>
@@ -137,19 +98,12 @@ const ParkingSchedule = () => {
                   <TableCell sx={{ border: '1px solid #ccc', fontWeight: 'bold' }}>{time}</TableCell>
                   {days.map((day, colIndex) => {
                     const cellId = `${rowIndex}-${colIndex}`;
-                    const isSelected = selectedCells.has(cellId);  // Check if the cell is in the selected set
                     return (
                       <TableCell
                         key={cellId}
-                        onMouseDown={() => handleMouseDown(cellId)}
-                        onMouseEnter={() => handleMouseEnter(cellId)}
                         sx={{
                           border: '1px solid #ccc',
-                          cursor: 'pointer',
-                          backgroundColor: isSelected ? '#81c784' : 'inherit',
-                          '&:hover': {
-                            backgroundColor: '#e0e0e0',
-                          },
+                          backgroundColor: 'inherit',
                         }}
                       />
                     );
