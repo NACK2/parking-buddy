@@ -3,6 +3,7 @@ import { Grid, Paper, Typography, Button } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 import ParkadeMap from '../components/Map';
+import axios from 'axios';
 
 const Preferences = () => {
     const [parkades, setParkades] = useState(
@@ -15,19 +16,48 @@ const Preferences = () => {
         }
     )
 
-    fetch('http://localhost:5050/users', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('http://localhost:5050/users');
+            console.log('Users:', response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    const handleSubmit = () => {
+        fetchUsers()    
     }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Users:', data);
-    })
-    .catch(error => {
-        console.error('Error fetching users:', error);
-    });
+
+//     fetch('http://localhost:5050/users', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//         "id": "1",
+//         "owner": "No",
+//         "Group": ["Long Man", "Alevi"],
+//         "Parking Lot": {}, // Ensure 'parkades' is defined and not empty
+//         "email": "deeznuts@yahoo.ca",
+//         "Schedule": {}
+//     })
+// })
+// .then(response => {
+//     if (!response.ok) {
+//         throw new Error('Network response was not ok ' + response.statusText);
+//     }
+//     return response.json();
+// })
+// .then(data => {
+//     console.log('Response:', data);
+// })
+// .catch(error => {
+//     console.error('Error:', error);
+// });
+
+
+    console.log('Parkades:', parkades);
 
     return (
         <>
@@ -55,7 +85,7 @@ const Preferences = () => {
             </Grid>
 
             <Grid item xs={3} mt={2} size="large">
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             </Grid>
         </>
     )

@@ -13,7 +13,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-
 let db;
 
 // Connect to MongoDB
@@ -43,12 +42,23 @@ app.get('/users', async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
-  let collection = await db.collection("Users");
-  let newDocument = req.body;
-  newDocument.date = new Date();
-  let result = await collection.insertOne(newDocument);
-  res.send(result).status(204);
+  console.log('Request body:', req.body); // Log the received body
+  try {
+    // Ensure request body is not undefined or null
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: 'Invalid request body' });
+    }
+
+    let collection = await db.collection("Users");
+    let newDocument = req.body;
+    newDocument.date = new Date(); // Add date to the document
+    let result = await collection.insertOne(newDocument);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ message: 'Error inserting document', error });
+  }
 });
+
 
 app.get('/parking', async (req, res) => {
   try {
