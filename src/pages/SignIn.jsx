@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { Button, TextField, Typography, Container, Box, Link, Alert } from '@mui/material';
 import axios from 'axios';
+import { EmailContext } from '../EmailContext';
 
 function SignInForm() {
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const { email, setEmail } = useContext(EmailContext);
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState("");
 

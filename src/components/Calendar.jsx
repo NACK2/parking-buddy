@@ -78,13 +78,7 @@ const Calendar = ({isPreferencesPage, setScheduleRanges}) => {
                 if (sortedValues[i] === end + 1) {
                     end = sortedValues[i]; // Extend the current range
                 } else {
-                    // Push the current range
-                    if (start === end) {
-                        ranges.push(`${start}-${start}`); // Single number
-                    } else {
-                        ranges.push(`${start}-${end}`); // Range
-                    }
-                    // Reset start and end for the next range
+                    ranges.push(`${start}-${end+1}`); // Range
                     start = sortedValues[i];
                     end = sortedValues[i];
                 }

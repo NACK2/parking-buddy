@@ -8,6 +8,7 @@ import Preferences from './pages/Preferences';
 import Navbar from './components/Navbar.jsx';
 import Settings from './pages/settings.jsx';
 
+
 function App() {
     const location = useLocation();
     return (
