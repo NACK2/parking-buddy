@@ -7,12 +7,14 @@ const Calendar = ({isPreferencesPage, setScheduleRanges}) => {
     const [isSelecting, setIsSelecting] = useState(false);
     const startCellRef = useRef(null); 
 
-    useEffect(() => {
+    {isPreferencesPage ? 
+        useEffect(() => {
         // selectedCells is a set of times i.e. {'0-0', '0-1', '2-2', '2-4'}
         const sortedTimesArr = Array.from(selectedCells).sort() // i.e. ['0-0, '0-1', '2-2', '2-4']
         const dayToTimesObj = arrToObj(sortedTimesArr) // {Sunday: [0, 1], Tuesday: [2, 4]}
         setScheduleRanges(convertToRanges(dayToTimesObj)) // {Sunday: ["0-1"], Tuesday: ["2-4"]}
-    }, [selectedCells])
+    }, [selectedCells]) 
+        : null}
 
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const timeSlots = [

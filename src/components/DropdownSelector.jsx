@@ -2,7 +2,6 @@ import { Box, FormControl, Select, MenuItem, Typography } from '@mui/material';
 
 const DropdownSelector = ({parkades, setParkades, parkade}) => {
     const handleChange = (event) => {
-        console.log(event.target.value)
         setParkades(prevParkades => (
             {...prevParkades, [parkade]: event.target.value}
         ))
