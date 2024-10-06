@@ -50,7 +50,7 @@ function Navbar() {
             <Button component={Link} to="/chat" color="inherit">
               Chat <ChatIcon sx={{ ml: 1 }} />
             </Button>
-            <Button component={Link} to="/calendar" color="inherit">
+            <Button component={Link} to="/status" color="inherit">
               Status <CalendarTodayIcon sx={{ ml: 1 }} />
             </Button>
             <Button component={Link} to="/preferences" color="inherit">
