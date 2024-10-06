@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Grid } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
+import ParkadeMap from '../components/Map';
 
 const Preferences = () => {
     const [parkades, setParkades] = useState(
@@ -22,6 +23,8 @@ const Preferences = () => {
                         <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
                     ))}
                 </Grid>
+                
+                <ParkadeMap/>
 
                 <Grid item xs={9}>
                     <Calendar isPreferencesPage={true}/>
