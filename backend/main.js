@@ -83,8 +83,11 @@ app.post("/parking", async (req, res) => {
   res.send(result).status(204);
 });
 
-app.get("/users", async (req, res) => {
-  const { email, password } = req.body; // Expect email and password in the request body
+app.get("/users/signin", async (req, res) => {
+  const email = req.query.email; // Get the email from query parameters
+  const password = req.query.password; // Get the password from query parameters
+  console.log(email);
+  console.log(password)
 
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required." });

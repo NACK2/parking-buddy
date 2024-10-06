@@ -13,18 +13,19 @@ function SignInForm() {
     // TODO: currently hardcoded signing in, fix
     const handleSubmit = (e) => {
         e.preventDefault();
-        const userData = {
-            email: email,
-            password: password
-        }
         if (email && password) {
-            axios.get("http://localhost:5050/users", userData)
-                .then(() => {
-                    nav("/status")
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+            axios.get("http://localhost:5050/users/signin", {
+                params: {
+                    email: email,
+                    password: password
+                }
+            })
+            .then(() => {
+                nav("/status");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
             alert("Signed in successfully!");
         } else {
             alert("Please fill in all fields.");
