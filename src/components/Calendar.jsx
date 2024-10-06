@@ -17,7 +17,7 @@ const Calendar = ({isPreferencesPage}) => {
         console.log(dayToRangesObj)
     }, [selectedCells])
 
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const timeSlots = [
         '0:00 - 1:00', '1:00 - 2:00', '2:00 - 3:00', '3:00 - 4:00', '4:00 - 5:00',
         '5:00 - 6:00', '6:00 - 7:00', '7:00 - 8:00', '8:00 - 9:00', '9:00 - 10:00',
@@ -121,7 +121,12 @@ const Calendar = ({isPreferencesPage}) => {
         setIsSelecting(true);
         startCellRef.current = cellId;
         const newSelectedCells = new Set(selectedCells);  // Copy previous selection
-        newSelectedCells.add(cellId);  // Add the starting cell to the Set
+        
+        if (newSelectedCells.has(cellId)) {
+            newSelectedCells.delete(cellId)
+        } else {
+            newSelectedCells.add(cellId);  // Add the starting cell to the Set    
+        }
         setSelectedCells(newSelectedCells);  // Update the state
     };
 
@@ -138,7 +143,7 @@ const Calendar = ({isPreferencesPage}) => {
 
     return (
         <Grid item xs={12} onMouseUp={handleMouseUp}>
-            <TableContainer component={Paper} sx={{ maxHeight: '500px', overflowY: 'scroll' }}>
+            <TableContainer component={Paper} sx={{ maxHeight: '500px', overflowY: 'scroll'}}>
             <Table stickyHeader>
                 <TableHead>
                 <TableRow>
@@ -165,7 +170,7 @@ const Calendar = ({isPreferencesPage}) => {
                             cursor: isPreferencesPage ? 'pointer' : null,
                             backgroundColor: isSelected ? '#81c784' : 'inherit',
                             '&:hover': {
-                                backgroundColor: '#e0e0e0',
+                                backgroundColor: '#e0e0e0'
                             },
                             }}
                         />
