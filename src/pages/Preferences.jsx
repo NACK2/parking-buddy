@@ -1,33 +1,62 @@
 import { useState } from 'react'
-import { Grid, Paper, Typography } from '@mui/material'
+import { Grid, Paper, Typography, Button } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 import ParkadeMap from '../components/Map';
+import axios from 'axios';
 
 const Preferences = () => {
     const [parkades, setParkades] = useState(
         {
-            "North Parkade": 1,
-            "West Parkade": 2,
-            "Rose Parkade": 3,
-            "Fraser Parkade": 4,
-            "Thunderbird Parkade": 5
+            "North Parkade": -1,
+            "West Parkade": -1,
+            "Rose Parkade": -1,
+            "Fraser Parkade": -1,
+            "Thunderbird Parkade": -1
         }
     )
 
-    fetch('http://localhost:5050/', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
+    const [scheduleRanges, setScheduleRanges] = useState(
+        {
+            Sunday: [],
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [], 
+            Saturday: []
+        }
+    )
+
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('http://localhost:5050/users');
+            console.log('Users:', response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    const addUser = async (newUser) => {
+        try {
+            const response = await axios.post('http://localhost:5050/users', newUser);
+            console.log('User added:', response.data);
+        } catch (error) {
+            console.error('Error adding user:', error);
+        }
+    };
+
+    const handleSubmit = () => {
+        const newUser = {
+            email: "tmpemail@ubc.ca",
+            "Parking Lot": parkades,
+            Group: ["tmpemail1@ubc.ca", "tmpemail2@ubc.ca"],
+            owner: "No",
+            Schedule: scheduleRanges
+        }
+
+        addUser(newUser)
     }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Users:', data);
-    })
-    .catch(error => {
-        console.error('Error fetching users:', error);
-    });
 
     return (
         <>
@@ -49,9 +78,13 @@ const Preferences = () => {
 
                 <Grid item xs={12}>
                     <Paper elevation={3} sx={{ mt: 2, padding: 3 }}>
-                        <Calendar isPreferencesPage={true}/>
+                        <Calendar isPreferencesPage={true} setScheduleRanges={setScheduleRanges}/>
                     </Paper>
                 </Grid>
+            </Grid>
+
+            <Grid item xs={3} mt={2} size="large">
+                <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             </Grid>
         </>
     )

@@ -27,7 +27,7 @@ const UserSchema = mongoose.Schema(
             required: true,
         },
         ParkingLot: {
-            type: Array,
+            type: Object,
             required: true,
         }
     }

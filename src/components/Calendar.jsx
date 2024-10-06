@@ -2,20 +2,19 @@ import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 import { useEffect } from 'react';
 import { useState, useRef } from "react";
 
-const Calendar = ({isPreferencesPage}) => {
+const Calendar = ({isPreferencesPage, setScheduleRanges}) => {
     const [selectedCells, setSelectedCells] = useState(new Set());  // Use Set to track selected cells
-
     const [isSelecting, setIsSelecting] = useState(false);
     const startCellRef = useRef(null); 
 
-    useEffect(() => {
+    {isPreferencesPage ? 
+        useEffect(() => {
         // selectedCells is a set of times i.e. {'0-0', '0-1', '2-2', '2-4'}
         const sortedTimesArr = Array.from(selectedCells).sort() // i.e. ['0-0, '0-1', '2-2', '2-4']
         const dayToTimesObj = arrToObj(sortedTimesArr) // {Sunday: [0, 1], Tuesday: [2, 4]}
-        const dayToRangesObj = convertToRanges(dayToTimesObj) // {Sunday: ["0-1"], Tuesday: ["2-4"]}
-        
-        console.log(dayToRangesObj)
-    }, [selectedCells])
+        setScheduleRanges(convertToRanges(dayToTimesObj)) // {Sunday: ["0-1"], Tuesday: ["2-4"]}
+    }, [selectedCells]) 
+        : null}
 
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const timeSlots = [
