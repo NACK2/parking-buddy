@@ -16,7 +16,10 @@
     "@mui/material": "^6.1.2",
     "@mui/styles": "^6.1.2",
     "react": "^18.3.1",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^18.3.1",
+    "react-native-maps": "^1.18.0",
+    "react-payment-inputs": "^1.2.0",
     "react-router-dom": "^6.26.2",
     "tesseract.js": "^5.1.1"
   },
