@@ -1,17 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Button, TextField, Typography, Container, Box, Link } from '@mui/material';
+import axios from 'axios'
 
 function CreateAccountForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
+    const nav = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (email && password) {
-            alert("Account created successfully!");
-        } else {
-            alert("Please fill in all fields.");
+        const userData = {
+            email: email
         }
+        if (email && password) {
+            if (password === confirmPassword) {
+                axios.post("http://localhost:5050/users", userData)
+                    .then(() => {
+                        nav("/preferences")
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                alert("Account created successfully!");
+            }
+            else {
+                setPasswordError(true)
+            }
+        } else {
+            alert("Please fill in all fields and ensure passwords match.");
+        }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -54,12 +80,43 @@ function CreateAccountForm() {
                         fullWidth
                         name="password"
                         label="Password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <Button onClick={togglePasswordVisibility}>
+                                    {showPassword ? "Hide" : "Show"}
+                                </Button>
+                            ),
+                        }}
                     />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        error={passwordError}
+                        helperText={passwordError ? "Passwords do not match." : ""}
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        type={showPassword ? "text" : "password"}
+                        id="confirmPassword"
+                        autoComplete="current-password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <Button onClick={togglePasswordVisibility}>
+                                    {showPassword ? "Hide" : "Show"}
+                                </Button>
+                            ),
+                        }}
+                    >
+                        test
+                    </TextField>
                     <Button
                         type="submit"
                         fullWidth

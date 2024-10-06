@@ -11,6 +11,17 @@ const UserSchema = mongoose.Schema(
             type: Boolean,
             required: true,
         },
+
+        password: {
+            type: String,
+            required: true
+        },
+
+        email: {
+            type: String,
+            required: true
+        },
+
         Group: {
             type: Array,
             required: true,

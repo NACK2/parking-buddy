@@ -32,7 +32,7 @@ function SignInForm() {
                     Sign In
                 </Typography>
                 <Typography variant="body2" color="textSecondary" sx={{ mt: 1, mb: 2 }}>
-                    Sign In to Manager Your Parking Permit
+                    Sign in to manage your parking permit
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField
@@ -67,11 +67,11 @@ function SignInForm() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#7DCFA6', '&:hover': { backgroundColor: '#6ABD8D' } }}
                     >
-                        Create Account
+                        Sign In
                     </Button>
                 </Box>
                 <Typography variant="body2" color="textSecondary">
-                    Already Have An Account? <Link href="create" sx={{ color: '#7DCFA6' }}>Sign In</Link>
+                    Don't have an account? <Link href="create" sx={{ color: '#7DCFA6' }}>Create one</Link>
                 </Typography>
             </Box>
         </Container>

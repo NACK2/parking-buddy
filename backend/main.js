@@ -4,6 +4,7 @@ import connectDB from "./db/conn.js";
 import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 5050;
+app.use(express.json());
 
 const corsOptions = {
   origin: 'http://localhost:5173', // Allow requests from this origin
