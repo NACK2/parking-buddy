@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useContext } from 'react';
 import { Card, CardContent, Typography, Grid, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -6,10 +6,11 @@ import GroupIcon from '@mui/icons-material/Group';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import EventIcon from '@mui/icons-material/Event';
 import Calendar from '../components/Calendar';
-
+import { EmailContext } from '../EmailContext';
 const Status = () => {
+  const { email } = useContext(EmailContext);
   const group = {
-    status: 'Matched',
+    status: email,
     location: 'North Parkade',
     members: ['Alice', 'Bob', 'John'],
   };
