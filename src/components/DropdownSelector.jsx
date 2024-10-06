@@ -2,8 +2,9 @@ import { Box, FormControl, Select, MenuItem, Typography } from '@mui/material';
 
 const DropdownSelector = ({parkades, setParkades, parkade}) => {
     const handleChange = (event) => {
+        console.log(event.target.value)
         setParkades(prevParkades => (
-            {...prevParkades, parkade: event.target.value}
+            {...prevParkades, [parkade]: event.target.value}
         ))
     }
 
@@ -19,7 +20,7 @@ const DropdownSelector = ({parkades, setParkades, parkade}) => {
                     sx={{height: 40}}
                 >
                     {Object.keys(parkades).map((_, i) => (
-                        <MenuItem key={i} value={i}>{i+1}</MenuItem>
+                        <MenuItem key={i} value={i+1}>{i+1}</MenuItem>
                     ))}
                 </Select>
             </FormControl>

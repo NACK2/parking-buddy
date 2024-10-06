@@ -170,7 +170,7 @@ const Calendar = ({isPreferencesPage}) => {
                             cursor: isPreferencesPage ? 'pointer' : null,
                             backgroundColor: isSelected ? '#81c784' : 'inherit',
                             '&:hover': {
-                                backgroundColor: '#e0e0e0',
+                                backgroundColor: '#e0e0e0'
                             },
                             }}
                         />
