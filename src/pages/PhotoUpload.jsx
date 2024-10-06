@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createWorker } from 'tesseract.js';
 import { CircularProgress, Box, Button, TextField, Typography, Paper, InputLabel, FormControl, Select, MenuItem, Divider, Link } from '@mui/material';
-var first = 0;
 
 const PhotoUpload = () => {
     const [file, setFile] = useState(null);
@@ -93,28 +92,60 @@ const PhotoUpload = () => {
     }
 
     return (
-        <div>
-            <Box>
-                <InputLabel htmlFor="image-upload">Upload Image of Ticket</InputLabel>
+        <>
+            <Paper elevation={3} sx={{ mb: 4, padding: 3, maxWidth: 600, mx: 'auto' }}>
+                <Typography variant="h5" gutterBottom>
+                    Upload Image of Ticket
+                </Typography>
                 <Divider sx={{ marginBottom: 2 }} />
-                <Button variant='contained' component='label' sx={{ mb: 2 }}>
-                    Upload
-                    <input type="file" hidden accept="image/*" onChange={handleUpload} />
-                </Button>
-                <div>
-                    {!text && file ? <CircularProgress /> : ""}
-                    {plate && <p>{plate}</p>}
-                    {time && <p>{time}</p>}
-                    {location && <p>{location}</p>}
-                </div>
-            </Box>
-            <Box>
-                <Link>input fields manually</Link>
-                <Button onClick={() => {
-                    parseText(testText);
-                }}>test</Button>
-            </Box>
-        </div>
+                <Box>
+                    <Button variant='contained' component='label' sx={{ mt: 1 }}>
+                        Upload
+                        <input type="file" hidden accept="image/*" onChange={handleUpload} />
+                    </Button>
+                    <div>
+                        {!text && file ? <CircularProgress /> : ""}
+                        {plate && <Typography variant="body1">Plate: {plate}</Typography>}
+                        {time && <Typography variant="body1">Time: {time}</Typography>}
+                        {location && <Typography variant="body1">Location: {location}</Typography>}
+                    </div>
+                </Box>
+            </Paper>
+            <Paper elevation={3} sx={{ mt: 2, padding: 3, maxWidth: 600, mx: 'auto' }}>
+                <Box sx={{ mt: 4 }}>
+                    <Typography variant="h5" gutterBottom>
+                        Or Manually Input Fields
+                    </Typography>
+                    <Divider sx={{ marginBottom: 2 }} />
+                    <form>
+                        <TextField
+                            fullWidth
+                            label="Plate #"
+                            variant="outlined"
+                            margin="normal"
+                            value={plate}
+                            onChange={(e) => setPlate(e.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Time Issued"
+                            variant="outlined"
+                            margin="normal"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Location"
+                            variant="outlined"
+                            margin="normal"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                    </form>
+                </Box>
+            </Paper>
+        </>
     )
 }
 
