@@ -7,6 +7,7 @@ import Status from './pages/Status.jsx';
 import Preferences from './pages/Preferences';
 import Navbar from './components/Navbar.jsx';
 import Settings from './pages/settings.jsx';
+import Users from './pages/MatchUsers.jsx';
 
 function App() {
     const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/status" element={<Status />} />
                 <Route path="/ticket" element={<PhotoUpload />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/matches" element={<Users />} />
             </Routes>
         </div>
     );

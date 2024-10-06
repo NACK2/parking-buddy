@@ -36,7 +36,7 @@ app.get('/', async (req, res) => {
   try {
     const usersCollection = db.collection('Users'); // Ensure the collection name matches exactly
     const users = await usersCollection.find().toArray(); // Fetch all users as an array
-    res.status(200).json([users]); // Send the users back as JSON
+    res.status(200).json(users); // Send the users back as JSON
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users', error });
   }
