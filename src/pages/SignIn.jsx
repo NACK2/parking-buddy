@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Button, TextField, Typography, Container, Box, Link } from '@mui/material';
+import { Button, TextField, Typography, Container, Box, Link, Alert } from '@mui/material';
 import axios from 'axios';
 
 function SignInForm() {
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState("");
 
     const nav = useNavigate();
 
     // TODO: currently hardcoded signing in, fix
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (email && password) {
-            axios.get("http://localhost:5050/users/signin", {
-                params: {
-                    email: email,
-                    password: password
-                }
-            })
-            .then(() => {
+            try {
+                const response = await axios.get(`http://localhost:5050/users/signin`, {
+                    params: {
+                        email: email,
+                        password: password
+                    }
+                });
                 nav("/status");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-            alert("Signed in successfully!");
+                // If the user is found, you can handle the response accordingly
+                setMessage(response.data.message);
+            } catch (error) {
+                if (error.response) {
+                    setMessage(error.response.data.message);
+                } else {
+                    setMessage('An error occurred. Please try again later.');
+                }
+            }
         } else {
             alert("Please fill in all fields.");
         }
@@ -97,8 +102,13 @@ function SignInForm() {
                     >
                         Sign In
                     </Button>
+                    {message && (
+                        <Alert severity="error">
+                            {message}
+                        </Alert>
+                    )}
                 </Box>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
                     Don't have an account? <Link href="create" sx={{ color: '#7DCFA6' }}>Create one</Link>
                 </Typography>
             </Box>
