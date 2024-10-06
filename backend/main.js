@@ -1,11 +1,18 @@
 import "./loadEnvironment.js";
 import express from 'express';
 import connectDB from "./db/conn.js";
+import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-// Middleware (if any)
-app.use(express.json());
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow requests from this origin
+  methods: 'GET, POST, PUT, DELETE', // Allow these methods
+  allowedHeaders: 'Content-Type, Authorization', // Allow these headers
+};
+
+app.use(cors(corsOptions));
+
 
 let db;
 

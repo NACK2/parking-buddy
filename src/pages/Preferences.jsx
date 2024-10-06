@@ -15,6 +15,20 @@ const Preferences = () => {
         }
     )
 
+    fetch('http://localhost:5050/', {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Users:', data);
+    })
+    .catch(error => {
+        console.error('Error fetching users:', error);
+    });
+
     return (
         <>
             <Grid container spacing={1}>

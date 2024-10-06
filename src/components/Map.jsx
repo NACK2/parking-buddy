@@ -62,8 +62,9 @@ const ParkadeMap = () => {
                 defaultCenter={{ lat: 49.2606, lng: -123.2460 }}
                 defaultZoom={14}
             >
-                {parkades.map(parkade => (
+                {parkades.map((parkade, i) => (
                     <Marker
+                        key={i}
                         position={parkade.location}
                         onClick={() => { handleOnClick(parkade) }}
                     />
