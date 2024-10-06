@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Grid, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useEffect } from 'react';
 import { useState, useRef } from "react";
 
@@ -158,11 +158,11 @@ const Calendar = ({isPreferencesPage}) => {
                         return (
                         <TableCell
                             key={cellId}
-                            onMouseDown={() => handleMouseDown(cellId)}
-                            onMouseEnter={() => handleMouseEnter(cellId)}
+                            onMouseDown={isPreferencesPage ? () => handleMouseDown(cellId) : null}
+                            onMouseEnter={isPreferencesPage ? () => handleMouseEnter(cellId) : null}
                             sx={{
                             border: '1px solid #ccc',
-                            cursor: 'pointer',
+                            cursor: isPreferencesPage ? 'pointer' : null,
                             backgroundColor: isSelected ? '#81c784' : 'inherit',
                             '&:hover': {
                                 backgroundColor: '#e0e0e0',
