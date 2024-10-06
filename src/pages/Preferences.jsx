@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
+import ParkadeMap from '../components/Map';
 
 const Preferences = () => {
     const [parkades, setParkades] = useState(
@@ -17,10 +18,12 @@ const Preferences = () => {
     return (
         <>
             {Object.keys(parkades).map((parkade, i) => (
-                <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
+                <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade} />
             ))}
 
-            <Calendar isPreferencesPage={true}/>
+            <ParkadeMap />
+
+            <Calendar isPreferencesPage={true} />
         </>
     )
 }
