@@ -1,12 +1,21 @@
 import { Card, CardContent, Typography, Grid, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useEffect } from 'react';
 import { useState, useRef } from "react";
 
 const Calendar = ({isPreferencesPage}) => {
     const [selectedCells, setSelectedCells] = useState(new Set());  // Use Set to track selected cells
-    const selectedTimesArr = Array.from(selectedCells).sort()
 
     const [isSelecting, setIsSelecting] = useState(false);
     const startCellRef = useRef(null); 
+
+    useEffect(() => {
+        // selectedCells is a set of times i.e. {'0-0', '0-1', '2-2', '2-4'}
+        const sortedTimesArr = Array.from(selectedCells).sort() // i.e. ['0-0, '0-1', '2-2', '2-4']
+        const dayToTimesObj = arrToObj(sortedTimesArr) // {Sunday: [0, 1], Tuesday: [2, 4]}
+        const dayToRangesObj = convertToRanges(dayToTimesObj) // {Sunday: ["0-1"], Tuesday: ["2-4"]}
+        
+        console.log(dayToRangesObj)
+    }, [selectedCells])
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const timeSlots = [
@@ -25,7 +34,7 @@ const Calendar = ({isPreferencesPage}) => {
     }
     */
     
-    const arrToObj = () => {
+    const arrToObj = (data) => {
         const dayEnum = {
             0: 'Sunday',
             1: 'Monday',
@@ -36,7 +45,7 @@ const Calendar = ({isPreferencesPage}) => {
             6: 'Saturday',
         }
 
-        const result = selectedTimesArr.reduce((acc, curr) => {
+        const result = data.reduce((acc, curr) => {
             const [key, value] = curr.split('-').map(Number); // Split the string and convert to numbers
             const day = dayEnum[key]
         
@@ -54,7 +63,38 @@ const Calendar = ({isPreferencesPage}) => {
         return result
     }
 
-    console.log(arrToObj())
+    const convertToRanges = (data) => {
+        const result = {};
+    
+        for (const [key, values] of Object.entries(data)) {
+            // Sort the values and remove duplicates
+            const sortedValues = Array.from(new Set(values)).sort((a, b) => a - b);
+            
+            const ranges = [];
+            let start = sortedValues[0];
+            let end = sortedValues[0];
+    
+            for (let i = 1; i <= sortedValues.length; i++) {
+                // Check if the current number is consecutive
+                if (sortedValues[i] === end + 1) {
+                    end = sortedValues[i]; // Extend the current range
+                } else {
+                    // Push the current range
+                    if (start === end) {
+                        ranges.push(`${start}-${start}`); // Single number
+                    } else {
+                        ranges.push(`${start}-${end}`); // Range
+                    }
+                    // Reset start and end for the next range
+                    start = sortedValues[i];
+                    end = sortedValues[i];
+                }
+            }
+            result[key] = ranges; // Assign ranges to the result
+        }
+    
+        return result;
+    };
 
     // Function to calculate the selected cells during dragging
     const calculateSelectedCells = (endCell) => {
@@ -121,8 +161,8 @@ const Calendar = ({isPreferencesPage}) => {
                             onMouseDown={() => handleMouseDown(cellId)}
                             onMouseEnter={() => handleMouseEnter(cellId)}
                             sx={{
-                            // border: '1px solid #ccc',
-                            // cursor: 'pointer',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
                             backgroundColor: isSelected ? '#81c784' : 'inherit',
                             '&:hover': {
                                 backgroundColor: '#e0e0e0',
