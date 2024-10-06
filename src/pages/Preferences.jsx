@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 import ParkadeMap from '../components/Map';
@@ -20,6 +20,7 @@ const Preferences = () => {
             <Grid container spacing={1}>
                 <Grid item xs={2.5} sx={{ my: 'auto' }}>
                     <Paper elevation={3} sx={{ mt: 2, padding: 3, maxWidth: 400 }}>
+                        <Typography variant='h6' textAlign='left'>Preferences</Typography>
                         {Object.keys(parkades).map((parkade, i) => (
                             <DropdownSelector key={i} parkades={parkades} setParkades={setParkades} parkade={parkade}/>
                         ))}

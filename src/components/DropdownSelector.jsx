@@ -9,7 +9,7 @@ const DropdownSelector = ({parkades, setParkades, parkade}) => {
     }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
             <FormControl sx={{width: 60 }}>
                 <Select
                     // labelId="demo-simple-select-label"
