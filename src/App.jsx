@@ -4,15 +4,11 @@ import SignInForm from "./pages/SignIn.jsx";
 import CreateAccountForm from "./pages/CreateAccount.jsx";
 import Status from './pages/Status.jsx';
 import PhotoUpload from './pages/PhotoUpload';
-import { connectToDatabase } from './db'; // Adjust the path if needed
+import { run } from './db.jsx';
 
 function App() {
   useEffect(() => {
-    const initDatabaseConnection = async () => {
-      await connectToDatabase();
-    };
-
-    initDatabaseConnection();
+    run();
   }, []);
 
   return (
