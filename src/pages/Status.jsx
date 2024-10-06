@@ -9,6 +9,7 @@ import Calendar from '../components/Calendar';
 import { EmailContext } from '../EmailContext';
 const Status = () => {
   const { email } = useContext(EmailContext);
+  
   const group = {
     status: email,
     location: 'North Parkade',
