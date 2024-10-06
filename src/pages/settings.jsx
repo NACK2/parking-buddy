@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'react-credit-cards/es/styles-compiled.css'; // Importing styles for react-credit-cards
+
 
 
 function Settings(){
