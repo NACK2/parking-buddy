@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Grid, Paper, Typography, Button } from '@mui/material'
+import { EmailContext } from '../EmailContext';
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 import ParkadeMap from '../components/Map';
 import axios from 'axios';
 
 const Preferences = () => {
+    const { email } = useContext(EmailContext);
     const [parkades, setParkades] = useState(
         {
             "North Parkade": -1,
@@ -48,7 +50,7 @@ const Preferences = () => {
 
     const handleSubmit = () => {
         const newUser = {
-            email: "tmpemail@ubc.ca",
+            email: email,
             "Parking Lot": parkades,
             Group: ["tmpemail1@ubc.ca", "tmpemail2@ubc.ca"],
             owner: "No",
