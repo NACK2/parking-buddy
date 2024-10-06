@@ -16,6 +16,18 @@ const Preferences = () => {
         }
     )
 
+    const [scheduleRanges, setScheduleRanges] = useState(
+        {
+            Sunday: [],
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [], 
+            Saturday: []
+        }
+    )
+
     const fetchUsers = async () => {
         try {
             const response = await axios.get('http://localhost:5050/users');
@@ -25,39 +37,26 @@ const Preferences = () => {
         }
     };
 
+    const addUser = async (newUser) => {
+        try {
+            const response = await axios.post('http://localhost:5050/users', newUser);
+            console.log('User added:', response.data);
+        } catch (error) {
+            console.error('Error adding user:', error);
+        }
+    };
+
     const handleSubmit = () => {
-        fetchUsers()    
+        const newUser = {
+            email: "tmpemail@ubc.ca",
+            "Parking Lot": parkades,
+            Group: ["tmpemail1@ubc.ca", "tmpemail2@ubc.ca"],
+            owner: "No",
+            Schedule: scheduleRanges
+        }
+
+        addUser(newUser)
     }
-
-//     fetch('http://localhost:5050/users', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//         "id": "1",
-//         "owner": "No",
-//         "Group": ["Long Man", "Alevi"],
-//         "Parking Lot": {}, // Ensure 'parkades' is defined and not empty
-//         "email": "deeznuts@yahoo.ca",
-//         "Schedule": {}
-//     })
-// })
-// .then(response => {
-//     if (!response.ok) {
-//         throw new Error('Network response was not ok ' + response.statusText);
-//     }
-//     return response.json();
-// })
-// .then(data => {
-//     console.log('Response:', data);
-// })
-// .catch(error => {
-//     console.error('Error:', error);
-// });
-
-
-    console.log('Parkades:', parkades);
 
     return (
         <>
@@ -79,7 +78,7 @@ const Preferences = () => {
 
                 <Grid item xs={12}>
                     <Paper elevation={3} sx={{ mt: 2, padding: 3 }}>
-                        <Calendar isPreferencesPage={true}/>
+                        <Calendar isPreferencesPage={true} setScheduleRanges={setScheduleRanges}/>
                     </Paper>
                 </Grid>
             </Grid>
