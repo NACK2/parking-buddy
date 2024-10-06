@@ -32,7 +32,7 @@ let db;
   }
 })();
 
-app.get('/', async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
     const usersCollection = db.collection('Users'); // Ensure the collection name matches exactly
     const users = await usersCollection.find().toArray(); // Fetch all users as an array
@@ -42,7 +42,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.post("/", async (req, res) => {
+app.post("/users", async (req, res) => {
   let collection = await db.collection("Users");
   let newDocument = req.body;
   newDocument.date = new Date();

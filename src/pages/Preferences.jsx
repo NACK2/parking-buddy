@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Grid, Paper, Typography } from '@mui/material'
+import { Grid, Paper, Typography, Button } from '@mui/material'
 import Calendar from '../components/Calendar';
 import DropdownSelector from '../components/dropdownSelector';
 import ParkadeMap from '../components/Map';
@@ -7,15 +7,15 @@ import ParkadeMap from '../components/Map';
 const Preferences = () => {
     const [parkades, setParkades] = useState(
         {
-            "North Parkade": 1,
-            "West Parkade": 2,
-            "Rose Parkade": 3,
-            "Fraser Parkade": 4,
-            "Thunderbird Parkade": 5
+            "North Parkade": -1,
+            "West Parkade": -1,
+            "Rose Parkade": -1,
+            "Fraser Parkade": -1,
+            "Thunderbird Parkade": -1
         }
     )
 
-    fetch('http://localhost:5050/', {
+    fetch('http://localhost:5050/users', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json'
@@ -52,6 +52,10 @@ const Preferences = () => {
                         <Calendar isPreferencesPage={true}/>
                     </Paper>
                 </Grid>
+            </Grid>
+
+            <Grid item xs={3} mt={2} size="large">
+                <Button variant="contained">Submit</Button>
             </Grid>
         </>
     )
