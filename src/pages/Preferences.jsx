@@ -10,8 +10,7 @@ const Preferences = () => {
             "West Parkade": 2,
             "Rose Parkade": 3,
             "Health Parkade": 4,
-            "Fraser Parkade": 5,
-            "Thunderbird Parkade": 6
+            "Thunderbird Parkade": 5
         }
     )
 
