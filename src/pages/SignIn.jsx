@@ -5,7 +5,7 @@ import axios from 'axios';
 import { EmailContext } from '../EmailContext';
 
 function SignInForm() {
-    const [email, setEmail] = useState('');
+    // const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { email, setEmail } = useContext(EmailContext);
     const [password, setPassword] = useState('');
